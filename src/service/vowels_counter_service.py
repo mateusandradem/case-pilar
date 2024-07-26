@@ -1,12 +1,11 @@
 from collections import Counter
 
-
 VOWELS = set("aeiou")
 
 
 class VowelsCounterService:
     @classmethod
-    def count_vowels(self, words: dict[str]) -> dict[str]:
+    def count_vowels(cls, words: list[str]) -> dict[str]:
         words_vowels = Counter()
 
         for word in words:
