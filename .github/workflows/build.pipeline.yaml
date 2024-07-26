@@ -1,0 +1,41 @@
+name: Building case Pilar test
+
+on:
+  push:
+    paths-ignore:
+      - 'README.md'
+      - 'pre-commit-config.yaml'
+
+env:
+  python_version: 3.12
+  poetry_version: 1.8.1
+  poetry_home: "/opt/poetry"
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{env.python_version}}
+
+      - name: Install poetry ${{env.poetry_version}}
+        shell: bash
+        run: |
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=${{env.poetry_home}} python3 - --version ${{env.poetry_version}}
+          export PATH="${{env.poetry_home}}/bin:$PATH"
+          poetry --version
+
+      - name: Install test dependencies
+        shell: bash
+        run: |
+          export PATH="${{env.poetry_home}}/bin:$PATH"
+          poetry install --with test
+
+      - name: Run unit tests
+        shell: bash
+        run: |
+          export PATH="${{env.poetry_home}}/bin:$PATH"
+          poetry run pytest tests/ --cov . --cov-report html
