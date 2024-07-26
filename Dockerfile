@@ -6,7 +6,7 @@ USER user
 
 WORKDIR /home/user/
 
-COPY app.py poetry.lock pyproject.toml README.md app/
+COPY app.py poetry.lock pyproject.toml README.md entrypoint.sh app/
 COPY src/ app/src/
 
 WORKDIR /home/user/app
@@ -19,6 +19,4 @@ RUN pip install poetry==1.8.1 --user --no-cache-dir && \
 ENV PATH=/home/user/app/.venv/bin:$PATH
 ENV PYTHONUNBUFFERED 1
 
-EXPOSE 80
-
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["./entrypoint.sh"]
