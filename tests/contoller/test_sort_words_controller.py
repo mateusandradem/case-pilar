@@ -12,7 +12,7 @@ client = TestClient(app)
 )
 def test_sort_words(order, expected_list):
     words_json = {"words": ["batman", "robin", "coringa"], "order": order}
-    response = client.post("/sort/", json=words_json)
+    response = client.post("/v1/sort/", json=words_json)
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_list
@@ -20,7 +20,7 @@ def test_sort_words(order, expected_list):
 
 def test_sort_words_wrong_payload():
     words_json = ["batman", "robin", "coringa"]
-    response = client.post("/sort/", json=words_json)
+    response = client.post("/v1/sort/", json=words_json)
 
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -30,6 +30,6 @@ def test_sort_words_wrong_payload():
     [client.get, client.head, client.put, client.patch, client.delete, client.options],
 )
 def test_count_vowels_method_not_allowed(method):
-    response = method("/sort/")
+    response = method("/v1/sort/")
 
     assert response.status_code == status.HTTP_405_METHOD_NOT_ALLOWED
