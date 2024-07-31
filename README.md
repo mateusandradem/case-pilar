@@ -1,5 +1,7 @@
 # Pilar Backend Test
 
+![case-pilar workflow](https://github.com/mateusandradem/case-pilar/actions/workflows/build.pipeline.yaml/badge.svg)
+
 This repository contains a project to Pilar backend test
 
 ## Requirements
@@ -31,7 +33,7 @@ poetry run fastapi run app.py
 The application can be runned in a docker container:
 ```console
 docker build -t case-pilar-api .
-docker run case-pilar
+docker run -p 8000:8000 case-pilar
 ```
 
 ## API
